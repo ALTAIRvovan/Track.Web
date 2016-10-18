@@ -21,6 +21,8 @@ from study_calendar.views import *
 urlpatterns = [
     url(r'^$', HomePageView.as_view()),
     url(r'^admin/', admin.site.urls),
+    url(r'^timetable/list$', TimeTableListView.as_view()),
     url(r'^timetable/$', TimeTableView.as_view()),
+    url(r'^timetable/(?P<timetable>[0-9]+)$', TimeTableView.as_view()),
     url(r'^timetable/(?P<timetable>[0-9]+)/cell/(?P<cell>[0-9])$', CellDetailView.as_view(), name='cell_detail'),
 ]

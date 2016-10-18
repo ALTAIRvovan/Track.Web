@@ -1,0 +1,10 @@
+{% extends "app.html" %}
+
+{% block content %}
+    <div>
+        {% for timetable in timetables %}
+            <a href="/timetable/{{ timetable.id }}">{{ timetable.name }}</a>
+        {% endfor %}
+
+    </div>
+{% endblock %}

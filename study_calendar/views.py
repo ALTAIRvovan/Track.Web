@@ -21,7 +21,17 @@ class TimeTableView(DetailView):
     model = TimeTable
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, {'timetable': TimeTable.objects.get(pk=1)})
+        if 'timetable' in kwargs:
+            key = kwargs["timetable"]
+        else:
+            key = 1
+        return render(request, self.template_name, {'timetable': TimeTable.objects.get(pk=key)})
+
+class TimeTableListView(TemplateView):
+    template_name = "TimeTableList.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'timetables': TimeTable.objects.all()})
 
 
 class CellView(TemplateView):
@@ -36,5 +46,6 @@ class CellDetailView(DetailView):
         timetable = TimeTable.objects.get(pk=kwargs["timetable"])
         cell = timetable.cell_set.filter(pk=kwargs["cell"]).get()
         return render(request, self.template_name, {'cell': cell})
+
 
 
