@@ -8,4 +8,4 @@ class HomePageView(RedirectView):
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
-        return "/timetable"
+        return "/timetable/list"
