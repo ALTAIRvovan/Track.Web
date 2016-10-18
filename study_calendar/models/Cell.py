@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.db import models
 
 from study_calendar.models import TimeTable
@@ -13,7 +12,7 @@ class Cell(models.Model):
     timeOfEnd = models.TimeField()
     dateOfStart = models.DateField()
     dateOfEnd = models.DateField()
-    dayOfWeek = models.IntegerField()
+    dayOfWeek = models.IntegerField() #засунуть чейсес
 
     def getStartTime(self):
         return self.timeOfStart.strftime("%s")
@@ -26,5 +25,3 @@ class Cell(models.Model):
 
 
 
-
-admin.site.register(Cell)

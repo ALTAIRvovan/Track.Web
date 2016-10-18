@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib import admin
 
 
 class Teacher(models.Model):
@@ -9,5 +8,3 @@ class Teacher(models.Model):
 
     def __str__(self):
         return "{0} {1} {2}".format(self.lastName, self.firstName, self.middleName)
-
-admin.site.register(Teacher)
