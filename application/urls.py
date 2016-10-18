@@ -16,10 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from study_calendar.views import *
+from core.views import HomePageView
 
 urlpatterns = [
     url(r'^$', HomePageView.as_view()),
     url(r'^admin/', admin.site.urls),
-    url(r'^timetable/', include('study_calendar.urls')),
+    url(r'^timetable/', include('study_calendar.urls', namespace="calendar")),
 ]
