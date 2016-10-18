@@ -1,0 +1,27 @@
+{% extends 'app.html' %}
+
+{% block title %}Главная страница расписаний{% endblock %}
+
+{% block content %}
+    {% load int_filters %}
+    {{ timetable.name }}
+    <div id="timetable" style="width: 1000px; height: 500px; overflow: scroll; background: #FFFF00">
+        {% with timetable.cell_set.all as cells %}
+        {% for daySym in '1234567' %}
+            <div style="display: block; height: 1008px; width: 200px; float: left;">
+                {% with forloop.counter as day %}
+                {% for cell in cells  %}
+                    {% if cell.dayOfWeek == day %}
+                        <div style="position: relative; left: 0; top: {{ cell.getStartTime|mod:1000}}px; display: block;">
+                            {% include "Cell.html" with cell=cell %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {% endwith %}
+            </div>
+        {% endfor %}
+            <div style="clear: both"></div>
+        {% endwith %}
+    </div>
+    
+{% endblock %}

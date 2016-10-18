@@ -16,6 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from study_calendar.views import *
+
 urlpatterns = [
+    url(r'^$', HomePageView.as_view()),
     url(r'^admin/', admin.site.urls),
+    url(r'^timetable/', TimeTableView.as_view())
 ]

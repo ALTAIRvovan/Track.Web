@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'study_calendar',
+    'user_app',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +122,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = '../collected_static/'
 STATICFILES_DIRS = ('static/',)
+
+
+AUTH_USER_MODEL = 'user_app.User'
