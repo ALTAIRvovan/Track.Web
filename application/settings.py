@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'study_calendar',
     'core',
+    'comments'
 ]
 
 AUTH_USER_MODEL = 'core.User'

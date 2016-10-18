@@ -1,6 +1,6 @@
 {% load int_filters %}
 
 <div style="border: 1px solid #000; height: {{ cell.getHowLong|mod:1000 }}px; background: white ">
-    <div>{{ cell.subject }}</div>
+    <div><a href="/timetable/{{ timetable.id }}/cell/{{ cell.id }}">{{ cell.subject }}</a></div>
     <div>{{ cell.teacher }}</div>
 </div>

@@ -13,7 +13,7 @@
                 {% for cell in cells  %}
                     {% if cell.dayOfWeek == day %}
                         <div style="position: relative; left: 0; top: {{ cell.getStartTime|mod:1000}}px; display: block;">
-                            {% include "Cell.html" with cell=cell %}
+                            {% include "Cell.html" with cell=cell timetable=timetable %}
                         </div>
                     {% endif %}
                 {% endfor %}
