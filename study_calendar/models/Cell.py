@@ -18,6 +18,9 @@ class Cell(models.Model):
     def getStartTime(self):
         return self.timeOfStart.strftime("%s")
 
+    def getHowLong(self):
+        return int(self.timeOfEnd.strftime("%s")) - int(self.timeOfStart.strftime("%s")) / 3600
+
     def __str__(self):
         return self.table.name + " " + str(self.dayOfWeek) + " " + str(self.timeOfStart)
 

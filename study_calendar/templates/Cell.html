@@ -1,4 +1,6 @@
-<div style="border: 1px solid #000">
+{% load int_filters %}
+
+<div style="border: 1px solid #000; height: {{ cell.getHowLong|mod:1000 }}px; background: white ">
     <div>{{ cell.subject }}</div>
     <div>{{ cell.teacher }}</div>
 </div>
