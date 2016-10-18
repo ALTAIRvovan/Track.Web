@@ -3,4 +3,14 @@
 {% block content %}
     <div>Предмет: {{ cell.subject }}</div>
     <div>Преподаватель: {{ cell.teacher }}</div>
+    <div>
+        <ul>
+        {% for comment in cell.comment_set.all %}
+            <li>
+                <p>{{ comment.text }}</p>
+                <span>{{  comment.author }}</span>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
