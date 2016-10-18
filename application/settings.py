@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'study_calendar',
-    'user_app',
+    'core',
 ]
+
+AUTH_USER_MODEL = 'core.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -123,5 +125,3 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '../collected_static/'
 STATICFILES_DIRS = ('static/',)
 
-
-AUTH_USER_MODEL = 'user_app.User'

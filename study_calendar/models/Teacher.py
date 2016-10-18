@@ -7,4 +7,7 @@ class Teacher(models.Model):
     firstName = models.CharField(max_length=255)
     middleName = models.CharField(max_length=255)
 
+    def __str__(self):
+        return "{0} {1} {2}".format(self.lastName, self.firstName, self.middleName)
+
 admin.site.register(Teacher)
