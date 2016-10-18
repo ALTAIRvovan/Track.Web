@@ -1,6 +1,6 @@
 from django.db import models
 
-from study_calendar.models import StudyGroup
+#from study_calendar.models import StudyGroup
 
 class TimeTable(models.Model):
 

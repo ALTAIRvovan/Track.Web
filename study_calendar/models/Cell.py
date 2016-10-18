@@ -1,6 +1,6 @@
 from django.db import models
 
-from study_calendar.models import TimeTable
+#from study_calendar.models.TimeTable import TimeTable
 
 
 class Cell(models.Model):
