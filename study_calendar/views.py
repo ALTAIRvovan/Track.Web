@@ -1,13 +1,16 @@
 from django.shortcuts import render
 
 # Create your views here.
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 from django.views.generic import DetailView
+from django.contrib.auth.decorators import login_required
 
 from study_calendar.models.TimeTable import TimeTable
 from study_calendar.models.Cell import Cell
 
 
+@method_decorator(login_required, name='dispatch')
 class TimeTableView(DetailView):
     template_name = "TimeTable.html"
     model = TimeTable
@@ -16,12 +19,14 @@ class TimeTableView(DetailView):
     context_object_name = "timetable"
 
 
+@method_decorator(login_required, name='dispatch')
 class TimeTableListView(ListView):
     template_name = "TimeTableList.html"
     model = TimeTable
     context_object_name = 'timetables'
 
 
+@method_decorator(login_required, name='dispatch')
 class CellDetailView(DetailView):
     template_name = "DetailsCell.html"
     model = Cell
@@ -30,6 +35,3 @@ class CellDetailView(DetailView):
         timetable = TimeTable.objects.get(pk=kwargs["timetable"])
         cell = timetable.cell_set.filter(pk=kwargs["cell"]).get()
         return render(request, self.template_name, {'cell': cell})
-
-
-

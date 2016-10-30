@@ -1,5 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 
 from .forms import UserRegistrationForm
 
@@ -7,7 +9,7 @@ from .forms import UserRegistrationForm
 from django.views.generic import RedirectView, FormView
 from django.conf import settings
 
-
+@method_decorator(login_required, name='dispatch')
 class HomePageView(RedirectView):
     permanent = False
 
