@@ -19,7 +19,8 @@ from django.contrib import admin
 from core.views import HomePageView
 
 urlpatterns = [
-    url(r'^$', HomePageView.as_view()),
+    url(r'^$', HomePageView.as_view(), name="root"),
+    url(r'^auth/', include('core.urls', namespace="auth")),
     url(r'^admin/', admin.site.urls),
     url(r'^timetable/', include('study_calendar.urls', namespace="calendar")),
 ]

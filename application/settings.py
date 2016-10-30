@@ -126,3 +126,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '../collected_static/'
 STATICFILES_DIRS = ('static/',)
 
+
+LOGIN_REDIRECT_URL = "root"
+LOGIN_URL = "auth:login"
+
