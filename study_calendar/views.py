@@ -7,10 +7,10 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, FormView, DeleteView, UpdateView, CreateView, RedirectView
 from django.contrib.auth.decorators import login_required
 
-from study_calendar.models import TimeTable
-from study_calendar.models import Cell
+from study_calendar.models import TimeTable, Cell
 
 from study_calendar.forms import NewTimeTableForm, EditTimeTableForm
+from comments.forms import CreateCommentForm
 
 
 @method_decorator(login_required, name='dispatch')
@@ -95,16 +95,21 @@ class TimeTableSubscribeView(RedirectView):
 
 
 @method_decorator(login_required, name='dispatch')
-class CellDetailView(DetailView):
+class CellDetailView(DetailView, FormView):
     template_name = "DetailsCell.html"
+    #pk_url_kwarg = "cell"
     model = Cell
+    form_class = CreateCommentForm
 
-    def get(self, request, *args, **kwargs):
-        timetable = TimeTable.objects.get(pk=kwargs["timetable"])
-        cell = timetable.cell_set.filter(pk=kwargs["cell"]).get()
-        return render(request, self.template_name, {'cell': cell})
+    def get_object(self, queryset=None):
+        timetable = get_object_or_404(TimeTable, pk=self.kwargs.get("timetable", 0))
+        cell = timetable.cell_set.filter(pk=self.kwargs.get("cell")).get()
+        if cell is None:
+            raise Http404()
+        return cell
 
 
+@method_decorator(login_required, name='dispatch')
 class CellCreateView(CreateView):
     template_name = "CellCreateView.html"
     model = Cell
