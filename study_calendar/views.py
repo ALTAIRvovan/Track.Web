@@ -1,16 +1,17 @@
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView, FormView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView, FormView, DeleteView, UpdateView, CreateView
 from django.contrib.auth.decorators import login_required
 
 from study_calendar.models import TimeTable
 from study_calendar.models import Cell
 
 from study_calendar.forms import NewTimeTableForm, EditTimeTableForm
+
 
 @method_decorator(login_required, name='dispatch')
 class TimeTableView(DetailView):
@@ -43,8 +44,9 @@ class TimeTableListView(ListView, FormView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        #form.fields["study_group"].choices = self.request.user.studyGroup.all().values_list()
+        # form.fields["study_group"].choices = self.request.user.studyGroup.all().values_list()
         return form
+
 
 @method_decorator(login_required, name='dispatch')
 class TimeTableDeleteView(DeleteView):
@@ -61,6 +63,8 @@ class TimeTableDeleteView(DeleteView):
     def get(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
+
+@method_decorator(login_required, name='dispatch')
 class TimeTableEditView(UpdateView):
     model = TimeTable
     success_url = reverse_lazy("calendar:list")
@@ -83,3 +87,26 @@ class CellDetailView(DetailView):
         timetable = TimeTable.objects.get(pk=kwargs["timetable"])
         cell = timetable.cell_set.filter(pk=kwargs["cell"]).get()
         return render(request, self.template_name, {'cell': cell})
+
+
+class CellCreateView(CreateView):
+    template_name = "CellCreateView.html"
+    model = Cell
+    fields = ['teacher', 'subject', 'timeOfStart', 'timeOfEnd', 'dateOfStart', 'dateOfEnd', 'dayOfWeek']
+
+    def dispatch(self, request, *args, **kwargs):
+        if not hasattr(request, "timetable_obj"):
+            timetable = get_object_or_404(TimeTable, pk=kwargs["timetable"])
+            if timetable.owner != request.user:
+                raise Http404
+            request.timetable_obj = timetable
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form_class()(request.POST)
+        if form.is_valid():
+            cell = form.save(commit=False)
+            cell.table = request.timetable_obj
+            cell.save()
+            return redirect("calendar:timetable", timetable=request.timetable_obj.pk)
+        return self.get(request, *args, **kwargs)

@@ -4,15 +4,18 @@
 
 {% block content %}
     {% load int_filters %}
-    {{ timetable.name }}
-    <div id="timetable" style="width: 1000px; height: 500px; overflow: scroll; background: #FFFF00">
+    <h1>{{ timetable.name }}</h1>
+    {% if timetable.owner == user %}
+    <a href="{% url "calendar:cell.create" timetable=timetable.id %}" class="btn btn-primary">Добавить ячейку</a>
+    {% endif %}
+    <div id="timetable">
         {% with timetable.cell_set.all as cells %}
         {% for daySym in '1234567' %}
-            <div style="display: block; height: 1008px; width: 200px; float: left;">
+            <div class="row">
                 {% with forloop.counter as day %}
                 {% for cell in cells  %}
                     {% if cell.dayOfWeek == day %}
-                        <div style="position: relative; left: 0; top: {{ cell.getStartTime|mod:1000}}px; display: block;">
+                        <div data-time="{{ cell.getStartTime }}" style="position: absolute; left: 0; top: {{ cell.getStartTime }}px; display: block;">
                             {% include "Cell.html" with cell=cell %}
                         </div>
                     {% endif %}

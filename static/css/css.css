@@ -1,3 +1,19 @@
 .navbar.navbar-default {
     background-color: #0072BB;
 }
+
+#timetable {
+    width: 1000px;
+    height: 500px;
+    overflow: scroll;
+    background: #FFFF00;
+}
+
+#timetable > div.row {
+    display: block;
+    height: 1008px;
+    width: 200px;
+    float: left;
+    border-right: 1px solid #F1F1F1;
+    position: relative;
+}

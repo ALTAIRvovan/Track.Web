@@ -5,9 +5,6 @@ from .models import TimeTable
 
 
 class NewTimeTableForm(forms.ModelForm):
-    #name = forms.CharField(max_length=255)
-    #description = forms.CharField(max_length=
-    #study_group = forms.ChoiceField(choices=())
 
 
     class Meta:

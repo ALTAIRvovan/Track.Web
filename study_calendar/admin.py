@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from study_calendar.models import Cell
-from study_calendar.models import StudyGroup
 from study_calendar.models import Teacher
 from study_calendar.models import TimeTable
 

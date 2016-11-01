@@ -1,0 +1,11 @@
+{% extends 'app.html' %}
+
+{% block content %}
+    <h1>Добавление новой ячейки в расписание</h1>
+    <form method="post">
+        {% include "form_view.html" with form=form %}
+        <div class="form-group clearfix">
+            <button type="submit" class="btn btn-default btn-raised pull-right">Добавить</button>
+        </div>
+    </form>
+{% endblock %}

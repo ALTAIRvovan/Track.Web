@@ -12,10 +12,11 @@ class Cell(models.Model):
     dayOfWeek = models.IntegerField() #засунуть чейсес
 
     def getStartTime(self):
-        return self.timeOfStart.strftime("%s")
+        return self.timeOfStart.hour * 60 + self.timeOfStart.minute
 
     def getHowLong(self):
-        return int(self.timeOfEnd.strftime("%s")) - int(self.timeOfStart.strftime("%s")) / 3600
+        return (self.timeOfEnd.hour - self.timeOfStart.hour) * 60 + \
+               self.timeOfEnd.minute - self.timeOfStart.minute
 
     def __str__(self):
         return self.table.name + " " + str(self.dayOfWeek) + " " + str(self.timeOfStart)
