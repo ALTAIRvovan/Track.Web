@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 # Create your views here.
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, DetailView, FormView, DeleteView, UpdateView, CreateView
+from django.views.generic import ListView, DetailView, FormView, DeleteView, UpdateView, CreateView, RedirectView
 from django.contrib.auth.decorators import login_required
 
 from study_calendar.models import TimeTable
@@ -28,6 +28,11 @@ class TimeTableListView(ListView, FormView):
     model = TimeTable
     context_object_name = 'timetables'
     form_class = NewTimeTableForm
+
+    def get_queryset(self):
+        if self.request.GET.get("section") == "my":
+            return self.request.user.timetables.all()
+        return super().get_queryset()
 
     def post(self, request, *args, **kwargs):
         form = NewTimeTableForm(request.POST)
@@ -76,6 +81,17 @@ class TimeTableEditView(UpdateView):
         if obj.owner != self.request.user:
             raise Http404
         return obj
+
+@method_decorator(login_required, name='dispatch')
+class TimeTableSubscribeView(RedirectView):
+
+    def get(self, request, *args, **kwargs):
+        timetable = get_object_or_404(TimeTable, pk=kwargs["timetable"])
+        request.user.timetables.add(timetable)
+        return super().get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse("calendar:list")
 
 
 @method_decorator(login_required, name='dispatch')

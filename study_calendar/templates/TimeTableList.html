@@ -1,5 +1,7 @@
 {% extends "app.html" %}
 
+{% load timetable_filters %}
+
 {% block content %}
     <div class="modal" id="add_new_timetable_modal">
         <div class="modal-dialog">
@@ -63,6 +65,9 @@
                         <a href="{% url "calendar:timetable" timetable=timetable.id %}">{{ timetable.name }}</a>
                     </h4>
                     <p class="list-group-item-text">{{ timetable.description }}</p>
+                    {% if not timetable|has_user:user %}
+                    <a href="{% url "calendar:timetable.subscribe" timetable=timetable.id %}" class="btn">Подписаться</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="list-group-separator"></div>
