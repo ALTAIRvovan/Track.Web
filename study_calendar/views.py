@@ -30,9 +30,12 @@ class TimeTableListView(ListView, FormView):
     form_class = NewTimeTableForm
 
     def get_queryset(self):
+        query_set = TimeTable.objects
         if self.request.GET.get("section") == "my":
-            return self.request.user.timetables.all()
-        return super().get_queryset()
+            query_set = self.request.user.timetables
+        search_field = self.request.GET.get("search", "")
+        query_set = query_set.filter(name__contains=search_field)
+        return query_set.all()
 
     def post(self, request, *args, **kwargs):
         form = NewTimeTableForm(request.POST)
@@ -45,6 +48,7 @@ class TimeTableListView(ListView, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["edit_form"] = EditTimeTableForm
+        context["use_search"] = True
         return context
 
     def get_form(self, form_class=None):

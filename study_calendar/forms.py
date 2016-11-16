@@ -13,6 +13,8 @@ class NewTimeTableForm(forms.ModelForm):
         fields = ('name', 'description')
 
 
+
+
 class EditTimeTableForm(forms.ModelForm):
 
     class Meta:

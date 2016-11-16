@@ -23,12 +23,12 @@ class RegisterFormView(FormView):
     template_name = "auth/register.html"
     success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
 
-    def post(self, request, *args, **kwargs):
+    '''def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
             return redirect(self.success_url)
-        return self.get(request, *args, **kwargs)
+        return self.get(request, *args, **kwargs)'''
 
 
 

@@ -1,12 +1,12 @@
 {
-  "name": "src",
+  "name": "mipt_timetable",
   "version": "1.0.0",
-  "description": "",
+  "description": "mipt timetable , track project",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ALTAIRvovan/Track.Web.git"
   },
-  "author": "",
+  "author": "Vladimir Panov",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ALTAIRvovan/Track.Web/issues"
@@ -16,7 +16,18 @@
     "bootstrap-material-design": "^0.5.10"
   },
   "devDependencies": {
+    "bootstrap-sass": "^3.3.7",
     "grunt": "^1.0.1",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
     "load-grunt-tasks": "^3.5.2"
-  }
+  },
+  "scripts": {
+    "gulp": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mipt",
+    "timetable"
+  ]
 }

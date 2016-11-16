@@ -1,0 +1,33 @@
+@import "colors";
+
+$timetable-width: 1000px;
+$day-height: 1440px;
+$row-width: 200px;
+
+.b-timetable {
+  width: $timetable-width;
+  height: 500px;
+  overflow: scroll;
+  background: #edeef0;
+
+  #{&}-wall {
+    position: relative;
+    width: $row-width * 7;
+    height: $day-height;
+    //overflow-x: hidden;
+  }
+
+  #{&}-row {
+    display: block;
+    height: $day-height;
+    width: $row-width;
+    float: left;
+    border-right: 1px solid $grey-600;
+    position: relative;
+  }
+  #{&}-cell {
+    border: 1px solid #000;
+    background: white;
+
+  }
+}

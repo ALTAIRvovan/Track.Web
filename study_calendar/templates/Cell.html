@@ -1,6 +1,6 @@
 {% load int_filters %}
 
-<div style="border: 1px solid #000; height: {{ cell.getHowLong }}px; background: white ">
+<div class="b-timetable-cell" style="height: {{ cell.getHowLong }}px;">
     <div><a href="{% url "calendar:cell_detail" timetable=cell.table.id cell=cell.id %}">{{ cell.subject }}</a></div>
     <div>{{ cell.teacher }}</div>
 </div>

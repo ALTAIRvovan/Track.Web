@@ -8,10 +8,11 @@
     {% if timetable.owner == user %}
     <a href="{% url "calendar:cell.create" timetable=timetable.id %}" class="btn btn-primary">Добавить ячейку</a>
     {% endif %}
-    <div id="timetable">
+    <div class="b-timetable">
+        <div class="b-timetable-wall">
         {% with timetable.cell_set.all as cells %}
         {% for daySym in '1234567' %}
-            <div class="row">
+            <div class="b-timetable-row">
                 {% with forloop.counter as day %}
                 {% for cell in cells  %}
                     {% if cell.dayOfWeek == day %}
@@ -25,6 +26,7 @@
         {% endfor %}
             <div style="clear: both"></div>
         {% endwith %}
+        </div>
     </div>
     
 {% endblock %}
