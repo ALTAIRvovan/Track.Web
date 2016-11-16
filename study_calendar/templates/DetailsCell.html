@@ -1,20 +1,36 @@
 {% extends 'app.html' %}
 
 {% block content %}
-    <div>Предмет: {{ cell.subject }}</div>
-    <div>Преподаватель: {{ cell.teacher }}</div>
-    <div>
-        <ul>
-        {% for comment in cell.comment_set.all %}
-            <li>
-                <p>{{ comment.text }}</p>
-                <span>{{  comment.author }}</span>
-            </li>
-        {% endfor %}
-        </ul>
-        <form method="post" action="{% url "calendar:cell.comment.add" timetable=cell.table.id cell=cell.id %}">
-            {% include "form_view.html" with form=form %}
-            <button type="submit" class="btn btn-primary">Отправить</button>
-        </form>
+    <h3>Предмет: {{ cell.subject }}</h3>
+    <h4>Преподаватель: {{ cell.teacher }}</h4>
+    <div class="clearfix">
+        <div class="col-md-offset-2 col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">Комментарии</div>
+                <div class="panel-body">
+                    <ul class="list-group ">
+                        {% for comment in cell.comment_set.all %}
+                            <li class="list-group-item">
+                                <div class="row-action-primary">
+                                    <i class="material-icons">face</i>
+                                </div>
+                                <div class="row-content">
+                                    <h4 class="list-group-heading">{{ comment.author }}</h4>
+                                    <p class="list-group-item-text">{{ comment.text }}</p>
+                                </div>
+                            </li>
+                            <div class="list-group-separator"></div>
+                        {% endfor %}
+                    </ul>
+                    <div class="col-md-10 pull-right">
+                        <form method="post"
+                              action="{% url "calendar:cell.comment.add" timetable=cell.table.id cell=cell.id %}">
+                            {% include "form_view.html" with form=form %}
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
