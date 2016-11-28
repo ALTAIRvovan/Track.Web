@@ -8,23 +8,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Комментарии</div>
                 <div class="panel-body">
-                    <ul class="list-group ">
+                    <ul class="list-group " id="comments_list">
                         {% for comment in cell.comment_set.all %}
-                            <li class="list-group-item">
-                                <div class="row-action-primary">
-                                    <i class="material-icons">face</i>
-                                </div>
-                                <div class="row-content">
-                                    <h4 class="list-group-heading">{{ comment.author }}</h4>
-                                    <p class="list-group-item-text">{{ comment.text }}</p>
-                                </div>
-                            </li>
-                            <div class="list-group-separator"></div>
+                            {% include "CommentDetailView.html" with comment=comment %}
                         {% endfor %}
                     </ul>
                     <div class="col-md-10 pull-right">
                         <form method="post"
-                              action="{% url "calendar:cell.comment.add" timetable=cell.table.id cell=cell.id %}">
+                              action="{% url "calendar:cell.comment.add" timetable=cell.table.id cell=cell.id %}"
+                              id="comment_add_form">
                             {% include "form_view.html" with form=form %}
                             <button type="submit" class="btn btn-primary">Отправить</button>
                         </form>

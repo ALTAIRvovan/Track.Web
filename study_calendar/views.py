@@ -91,7 +91,7 @@ class TimeTableEditView(UpdateView):
 
 
     def form_valid(self, form):
-        self.model = form.save();
+        self.model = form.save()
         return HttpResponse()
 
 
