@@ -55,3 +55,10 @@ class TimeTable(models.Model):
     def getCellsInDay(self):
         return self.cell_set.order_by('dayOfWeek')
 
+    def as_json(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "owner": self.owner.pk
+        }
+

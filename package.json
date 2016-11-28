@@ -16,10 +16,16 @@
     "bootstrap-material-design": "^0.5.10"
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-latest": "^6.16.0",
     "bootstrap-sass": "^3.3.7",
     "grunt": "^1.0.1",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.1",
     "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.0.0",
     "load-grunt-tasks": "^3.5.2"
   },
   "scripts": {

@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
@@ -11,6 +11,8 @@ from study_calendar.models import TimeTable, Cell
 
 from study_calendar.forms import NewTimeTableForm, EditTimeTableForm
 from comments.forms import CreateCommentForm
+from django.core import serializers
+import json
 
 
 @method_decorator(login_required, name='dispatch')
@@ -79,12 +81,19 @@ class TimeTableEditView(UpdateView):
     success_url = reverse_lazy("calendar:list")
     pk_url_kwarg = "timetable"
     form_class = EditTimeTableForm
+    template_name = "form_view.html"
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
         if obj.owner != self.request.user:
             raise Http404
         return obj
+
+
+    def form_valid(self, form):
+        self.model = form.save();
+        return HttpResponse()
+
 
 @method_decorator(login_required, name='dispatch')
 class TimeTableSubscribeView(RedirectView):
