@@ -54,10 +54,10 @@
                 <div class="row-content">
                     {% if timetable.owner == user %}
                     <div class="action-secondary">
-                        <a href="#" data-toggle="modal" data-target="#edit_timetable_modal" data-timetable="{{ timetable.id }}">
+                        <a href="#" title="Редактировать" data-toggle="modal" data-target="#edit_timetable_modal" data-timetable="{{ timetable.id }}">
                             <i class="material-icons">mode edit</i>
                         </a>
-                        <a class="b-timetable-remove" href="{% url "calendar:timetable.remove" timetable=timetable.id %}">
+                        <a class="b-timetable-remove" title="Удалить" href="{% url "calendar:timetable.remove" timetable=timetable.id %}">
                             <i class="material-icons">clear</i>
                         </a>
                     </div>

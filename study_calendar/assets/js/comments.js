@@ -11,3 +11,10 @@ $("#comment_add_form").submit(function(event) {
         comments.append(data);
     });
 });
+
+setInterval(() => {
+    let list = $("#comments_list");
+    $.get(list.data("update-url"), (data) => {
+        list.html(data);
+    })
+}, 5000);

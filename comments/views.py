@@ -1,14 +1,18 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django import forms
 from django.urls import reverse, reverse_lazy
-from django.views.generic import FormView, RedirectView
+from django.utils.decorators import method_decorator
+from django.views.generic import FormView, RedirectView, ListView
 
 from study_calendar.models import Cell
 from .forms import CreateCommentForm
+from .models import Comment
 
 
 # Create your views here.
 
+@method_decorator(login_required, name='dispatch')
 class CreateCommentView(FormView, RedirectView):
     form_class = CreateCommentForm
     template_name = "CommentDetailView.html"
@@ -34,4 +38,13 @@ class CreateCommentView(FormView, RedirectView):
         return render(self.request, "CommentDetailView.html", context={"comment":comment})
 
 
+@method_decorator(login_required, name='dispatch')
+class CommentListView(ListView):
+    template_name = "CommentListView.html"
+    model = Comment
+    context_object_name = "comments"
 
+    def get_queryset(self):
+        return Comment.objects\
+            .filter(cell__table_id=self.kwargs.get("timetable"))\
+            .filter(cell_id=self.kwargs.get("cell"))

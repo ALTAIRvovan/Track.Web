@@ -8,7 +8,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Комментарии</div>
                 <div class="panel-body">
-                    <ul class="list-group " id="comments_list">
+                    <ul class="list-group " id="comments_list" data-update-url="{% url "calendar:cell_comments_list" timetable=cell.table.id cell=cell.id %}">
                         {% for comment in cell.comment_set.all %}
                             {% include "CommentDetailView.html" with comment=comment %}
                         {% endfor %}

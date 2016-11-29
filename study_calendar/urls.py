@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 
-from comments.views import CreateCommentView
+from comments.views import CreateCommentView, CommentListView
 from study_calendar.views import TimeTableListView, TimeTableView, CellDetailView, TimeTableDeleteView, \
     TimeTableEditView, CellCreateView, TimeTableSubscribeView
 
@@ -12,7 +12,8 @@ urlpatterns = [
     url(r'^(?P<timetable>[0-9]+)/edit$', TimeTableEditView.as_view(), name="timetable.edit"),
     url(r'^(?P<timetable>[0-9]+)/subscribe$', TimeTableSubscribeView.as_view(), name="timetable.subscribe"),
     url(r'^(?P<timetable>[0-9]+)/cell/(?P<cell>[0-9]+)$', CellDetailView.as_view(), name='cell_detail'),
-    url(r'^(?P<timetable>[0-9]+)/cell/(?P<cell>[0-9]+)/comment/add$', CreateCommentView.as_view(), name='cell.comment.add'),
+    url(r'^(?P<timetable>[0-9]+)/cell/(?P<cell>[0-9]+)/comments$', CommentListView.as_view(), name='cell_comments_list'),
+    url(r'^(?P<timetable>[0-9]+)/cell/(?P<cell>[0-9]+)/comment/add$', CreateCommentView.as_view(),
+        name='cell.comment.add'),
     url(r'^(?P<timetable>[0-9]+)/cell/create$', CellCreateView.as_view(), name='cell.create'),
 ]
-

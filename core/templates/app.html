@@ -9,21 +9,23 @@
     <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
     <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
     <link rel="stylesheet" href="{% static "bootstrap-material-design/css/ripples.min.css" %}">
+    <link rel="stylesheet" href="{% static "sweetalert/sweetalert.css" %}">
     <link rel="stylesheet" href="{% static "css/css.css" %}">
 </head>
 <body>
 {% include "top_nav_panel.html" %}
 <div class="container">
-<div class="well">
-{% block content %}
-    <h1>CONTENT MUST BE THERE!</h1>
-{% endblock %}
-</div>
+    <div class="well">
+        {% block content %}
+            <h1>CONTENT MUST BE THERE!</h1>
+        {% endblock %}
+    </div>
 </div>
 </body>
-    <script src="{% static "jquery/jquery.min.js" %}"></script>
-    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-    <script src="{% static "bootstrap-material-design/js/material.min.js" %}"></script>
-    <script src="{% static "bootstrap-material-design/js/ripples.min.js" %}"></script>
-    <script src="{% static "js/all.js" %}"></script>
+<script src="{% static "jquery/jquery.min.js" %}"></script>
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+<script src="{% static "bootstrap-material-design/js/material.min.js" %}"></script>
+<script src="{% static "bootstrap-material-design/js/ripples.min.js" %}"></script>
+<script src="{% static "sweetalert/sweetalert.min.js" %}"></script>
+<script src="{% static "js/all.js" %}"></script>
 </html>
