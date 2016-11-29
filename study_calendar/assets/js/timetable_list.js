@@ -30,3 +30,24 @@ $('#edit_timetable_form').submit(function(event) {
     });
     return event.preventDefault();
 });
+
+$(".b-timetable-remove").click((event) => {
+    event.preventDefault();
+    console.log(event.currentTarget);
+    let link = $(event.currentTarget);
+    let list_group_item = $(event.currentTarget).closest(".list-group-item-with-line");
+    console.log(list_group_item);
+    let timetableName = $(list_group_item.find(".list-group-item-heading")).find("a").get(0);
+    timetableName = $(timetableName);
+    console.log(link.attr("href"));
+    if (confirm("Вы действительно хотите удалить расписание " +
+            timetableName.text() + " ?")) {
+        $.post(link.attr("href"), {}, (data) => {
+            console.log(data);
+            if(data.length == 0) {
+                list_group_item.remove();
+            }
+        });
+    }
+
+});

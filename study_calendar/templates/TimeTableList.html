@@ -46,6 +46,7 @@
     <button class="btn btn-primary" data-toggle="modal" data-target="#add_new_timetable_modal">Добавить расписание</button>
     <div class="list-group">
         {% for timetable in timetables %}
+            <div class="list-group-item-with-line">
             <div class="list-group-item">
                 <div class="row-action-primary">
                     <i class="material-icons">folder</i>
@@ -56,7 +57,7 @@
                         <a href="#" data-toggle="modal" data-target="#edit_timetable_modal" data-timetable="{{ timetable.id }}">
                             <i class="material-icons">mode edit</i>
                         </a>
-                        <a href="{% url "calendar:timetable.remove" timetable=timetable.id %}">
+                        <a class="b-timetable-remove" href="{% url "calendar:timetable.remove" timetable=timetable.id %}">
                             <i class="material-icons">clear</i>
                         </a>
                     </div>
@@ -71,6 +72,7 @@
                 </div>
             </div>
             <div class="list-group-separator"></div>
+            </div>
         {% endfor %}
 
     </div>

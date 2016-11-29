@@ -30,6 +30,7 @@ class TimeTableListView(ListView, FormView):
     model = TimeTable
     context_object_name = 'timetables'
     form_class = NewTimeTableForm
+    success_url = reverse_lazy("calendar:list")
 
     def get_queryset(self):
         query_set = TimeTable.objects
@@ -39,13 +40,11 @@ class TimeTableListView(ListView, FormView):
         query_set = query_set.filter(name__contains=search_field)
         return query_set.all()
 
-    def post(self, request, *args, **kwargs):
-        form = NewTimeTableForm(request.POST)
-        if form.is_valid():
-            timetable = form.save(commit=False)
-            timetable.owner = request.user
-            timetable.save()
-        return self.get(request, *args, **kwargs)
+    def form_valid(self, form):
+        timetable = form.save(commit=False)
+        timetable.owner = self.request.user
+        timetable.save()
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -71,8 +70,14 @@ class TimeTableDeleteView(DeleteView):
             raise Http404
         return obj
 
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponse()
+
     def get(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
+        return HttpResponse()
 
 
 @method_decorator(login_required, name='dispatch')
