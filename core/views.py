@@ -9,12 +9,17 @@ from .forms import UserRegistrationForm
 from django.views.generic import RedirectView, FormView
 from django.conf import settings
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 @method_decorator(login_required, name='dispatch')
 class HomePageView(RedirectView):
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
-        return "/timetable/list"
+        logger.info('User has redirected to Calendar:list')
+        return reverse_lazy("calendar:list")#"/timetable/list"
 
 
 
@@ -29,6 +34,20 @@ class RegisterFormView(FormView):
             form.save()
             return redirect(self.success_url)
         return self.get(request, *args, **kwargs)'''
+
+
+
+    def form_valid(self, form):
+        logger.debug("client has registered")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        logger.debug("client tried to register")
+        return super().form_invalid(form)
+
+
+
+
 
 
 

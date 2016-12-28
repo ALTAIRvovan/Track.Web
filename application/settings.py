@@ -11,18 +11,23 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import configparser
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# RawConfigParser чтобы можно было нормально использовать SECRET_KEY без добавления лишних символов
+config = configparser.RawConfigParser()
+config.read(os.getenv('DJANGO_CONFIG_FILE', BASE_DIR + "/application/config.ini"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'j+2^tb0bubyl)0lk5i-1&2v(2nj@o^q16h%hj0#d#a0@0k_+i4'
+SECRET_KEY = config.get("main", "SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config.get("main", "DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -79,8 +84,12 @@ WSGI_APPLICATION = 'application.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': config.get("db", "ENGINE"),
+        'NAME': config.get("db", "NAME"),  # os.path.join(BASE_DIR, 'db.sqlite3'),
+        'USER': config.get("db", "USER", fallback=''),
+        "PASSWORD": config.get("db", "PASSWORD", fallback=''),
+        "HOST": config.get("db", "HOST", fallback=''),
+        "PORT": config.get("db", "PORT", fallback=''),
     }
 }
 
@@ -131,7 +140,52 @@ INTERNAL_IPS = (
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+        'BACKEND': config.get("cache", "BACKEND", fallback='django.core.cache.backends.memcached.MemcachedCache'),
+        'LOCATION': config.get("cache", "LOCATION"),
     }
+}
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'formatter': 'verbose',
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': config.get("logging", "filename", fallback=BASE_DIR + "/logs/logs.txt"),
+        },
+        'console': {
+            'formatter': 'simple',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[%(levelname)s] [%(asctime)s] [%(module)s][%(name)s] [%(process)d] [%(thread)d]: %(message)s'
+        },
+        'simple': {
+            'format': '[%(levelname)s] %(message)s'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+        'core': {
+            'handlers': ['file'],
+            'level': 'DEBUG'
+        },
+        'comments': {
+            'handlers': ['file'],
+            'level': 'INFO',
+        },
+        'study_calendar': {
+            'handlers': ['file'],
+            'level': 'INFO'
+        }
+    },
 }

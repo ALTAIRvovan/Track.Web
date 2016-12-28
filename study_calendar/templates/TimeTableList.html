@@ -52,7 +52,7 @@
                     <i class="material-icons">folder</i>
                 </div>
                 <div class="row-content">
-                    {% if timetable.owner == user %}
+                    {% if timetable.owner_id == user.id %}
                     <div class="action-secondary">
                         <a href="#" title="Редактировать" data-toggle="modal" data-target="#edit_timetable_modal" data-timetable="{{ timetable.id }}">
                             <i class="material-icons">mode edit</i>

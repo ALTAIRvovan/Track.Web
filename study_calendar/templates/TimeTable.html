@@ -1,13 +1,16 @@
 {% extends 'app.html' %}
 
+{% load cache %}
+
 {% block title %}Главная страница расписаний{% endblock %}
 
 {% block content %}
     {% load int_filters %}
-    <h1>{{ timetable.name }}</h1>
-    {% if timetable.owner == user %}
+    <h1>{{ timetable.name }}(Среднее число комментов: {{ avg_comm|floatformat }})</h1>
+    {% if timetable.owner_id == user.id %}
     <a href="{% url "calendar:cell.create" timetable=timetable.id %}" class="btn btn-primary">Добавить ячейку</a>
     {% endif %}
+    {% cache 3600 "timetable" timetable.id %}
     <div class="b-timetable">
         <div class="b-timetable-wall">
         {% with timetable.cell_set.all as cells %}
@@ -28,5 +31,6 @@
         {% endwith %}
         </div>
     </div>
+    {% endcache %}
     
 {% endblock %}
