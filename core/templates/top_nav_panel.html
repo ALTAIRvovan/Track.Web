@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -16,13 +18,13 @@
         <div class="collapse navbar-collapse">
             {% if user.is_authenticated %}
                 <ul class="nav navbar-nav">
-                    <li><a href="{% url "calendar:list" %}">Все расписания</a></li>
-                    <li><a href="{% url "calendar:list" %}?section=my">Мои расписания</a></li>
+                    <li><a href="{% url "calendar:list" %}">{% trans "Все расписания" %}</a></li>
+                    <li><a href="{% url "calendar:list" %}?section=my">{% trans "Мои расписания" %}</a></li>
                 </ul>
                 {% if use_search %}
                     <form class="navbar-form navbar-left" method="get">
                         <div class="form-group is-empty">
-                            <input type="text" name="search" class="form-control col-sm-8" placeholder="Search">
+                            <input type="text" name="search" class="form-control col-sm-8" placeholder="{% trans "Найти" %}">
                         </div>
                     </form>
                 {% endif %}
@@ -34,7 +36,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">Тут будет что-то</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{% url "auth:logout" %}">Выйти</a></li>
+                            <li><a href="{% url "auth:logout" %}">{% trans "Выйти" %}</a></li>
                         </ul>
                     </li>
                 </ul>
